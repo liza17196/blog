@@ -16,7 +16,6 @@ class TopicController extends Controller
 {
 
     public function index($id) {       //вывод списка тем для определенного раздела
-
         $title = Section::find($id);        //вывод названия раздела
 
         return view('pages.topics', compact('title'));
@@ -27,12 +26,19 @@ class TopicController extends Controller
         return view('pages.create');
     }
 
-    public function new_topic()
+    public function option() {
+
+        $options = Section::all();
+
+        return view('pages.create', compact('options'));
+    }
+
+    public function new_topic(Section $options)
     {
         $this->validate(request(), [
 
             'title' => 'required',
-            'section_id' => 'required',
+            'section_id' => 'max:255',
             'body' => 'required'
         ]);
 
@@ -47,11 +53,11 @@ class TopicController extends Controller
         return redirect('/profile');
     }
 
-    public function show($id)
+    public function show($id)                       //вывод страницы определенной темы
     {
         $topic = Topic::find($id);
 
-        return view('/profile', compact('topic'));
+        return view('pages.topic', compact('topic'));
     }
 
     public function edit($id)
@@ -70,10 +76,4 @@ class TopicController extends Controller
         //
     }
 
-    public function option() {
-
-        $options = Section::all();
-
-        return view('pages.create', compact('options'));
-    }
 }

@@ -8,7 +8,7 @@ class Topic extends Model
 {
 	protected $table = 'topics';
 
-    protected $fillable = ['title', 'body', 'user_id'];
+    protected $fillable = ['title', 'body', 'user_id', 'section_id'];
 
     public function section() {
     	return $this->belongsTo('App\Section');

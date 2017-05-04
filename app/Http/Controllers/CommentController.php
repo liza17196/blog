@@ -11,6 +11,8 @@ use Auth;
 use App\User;
 use App\Topic;
 use App\Section;
+use App\Comment;
+
 class CommentController extends Controller
 {
     /**
@@ -28,9 +30,23 @@ class CommentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
-        //
+        $topic = Topic::find($id);
+
+        $this->validate(request(), [
+
+            'body' => 'max:255'
+        ]);
+
+        Comment::create([
+
+            'topic_id' => $topic->id,
+            'user_id' => auth()->user()->id,
+            'body' => request('body'),
+        ]);
+
+        return back();  
     }
 
     /**
@@ -50,7 +66,7 @@ class CommentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($topic_id)
     {
         //
     }

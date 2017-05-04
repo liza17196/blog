@@ -2,7 +2,7 @@
             <table class="table table-striped">
               <thead>
                 <tr>
-                  <th>Название раздела</th>
+                  <th>Раздел</th>
                   <th>Последняя тема</th>
                   <th>Автор</th>
                   <th>Дата</th>
@@ -11,7 +11,7 @@
               @foreach($sections as $section)
               <tbody>
                 <tr>
-                  <td><a href="/posts/{{ $section->id }}">{{ $section->section }}</a></td>
+                  <td><a href="/sections/{{ $section->id }}">{{ $section->section }}</a></td>
                   <td>---</td>
                   <td>---</td>
                   <td>{{ $section->created_at->toFormattedDateString() }}</td>

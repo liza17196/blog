@@ -6,7 +6,6 @@ use App\User;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
-use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
@@ -39,16 +38,15 @@ class AuthController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
-    protected function validator(Request $request)
+    protected function validator(array $data)
     {
-        dd('qwe');
-        dd( Validate::make($data, [
+        return Validator::make($data, [
             'name' => 'required|max:255',
-            // 'email' => 'required|email|max:255|unique:users',
-            // 'phone' => 'required|unique:users|max:10',
-            // 'avatar' => 'mimes:png,jpg',
-            // 'password' => 'required|confirmed|min:6',
-        ]));
+            'email' => 'required|email|max:255|unique:users',
+            'phone' => 'required|unique:users|max:10',
+            'avatar' => 'max:255',
+            'password' => 'required|confirmed|min:6',
+        ]);
     }
 
     /**
@@ -59,11 +57,11 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
-        // dd($data);
-        $filename = time() . '.' . 
-        // $request->file('image')->getClientOriginalExtension();
+        // // dd($data);
+        // $filename = time() . '.' . 
+        // // $request->file('image')->getClientOriginalExtension();
 
-        $image = Image::make($avatar)->resize(150, 150)->save( public_path('/uploads/avatars/' . $filename) );
+        // $image = Image::make($avatar)->resize(150, 150)->save( public_path('/uploads/avatars/' . $filename) );
 
         return User::create([
             'name' => $data['name'],
