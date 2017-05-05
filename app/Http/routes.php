@@ -10,7 +10,7 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-Route::auth();
+// Route::auth();
 
 Route::get('/', function () {
     return view('pages/index');
