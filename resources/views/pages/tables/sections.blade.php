@@ -12,7 +12,7 @@
               <tbody>
                 <tr>
                   <td><a href="/sections/{{ $section->id }}">{{ $section->section }}</a></td>
-                  <td>---</td>
+                  <td>{{ $last_topic->section }}</td>
                   <td>---</td>
                   <td>{{ $section->created_at->toFormattedDateString() }}</td>
                 </tr>

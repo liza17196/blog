@@ -57,12 +57,12 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
-        // // dd($data);
+        // dd($data);
         // $filename = time() . '.' . 
-        // // $request->file('image')->getClientOriginalExtension();
+        // $request->file('image')->getClientOriginalExtension();
 
         // $image = Image::make($avatar)->resize(150, 150)->save( public_path('/uploads/avatars/' . $filename) );
-
+        
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
