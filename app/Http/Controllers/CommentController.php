@@ -66,9 +66,9 @@ class CommentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($topic_id)
+    public function show(Topic $id)
     {
-        //
+       // 
     }
 
     /**

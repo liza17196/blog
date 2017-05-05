@@ -59,34 +59,45 @@
 		<div class='comments'>
 		<h3>Комментарии</h3>
 		<br>
-		@foreach($topic->comments as $comment)
-			<lu class="list-group">
-				<article>
-					<li class="list-group-item">
-						<strong>
-							<p>{{ $comment->created_at->diffForHumans() }}: &nbsp;</p> <!-- Вывод даты к коментарию -->
-							<p>{{ $comment->user->name }}</p>
-						</strong>	
-						{!! $comment->body !!}		<!-- Вывод коментарий -->
+			@foreach($comments as $comment)
+				<lu class="list-group">
+					<article>
+						<li class="list-group-item">
+							<strong>
+								<p>{{ $comment->created_at->diffForHumans() }}: &nbsp;</p> <!-- Вывод даты к коментарию -->
+								<p>{{ $comment->user->name }}</p>
+							</strong>	
+							{!! $comment->body !!}		<!-- Вывод коментарий -->
 
-					</li>
-				</article>
-			</lu>
-		@endforeach
-		<hr>
-		<div class="card">
-			<dv class="card-block">
-				<form method="POST" action="/posts/{{ $topic->id }}/comments">
-					{{ csrf_field() }}
-					<div class="form-group">
-					    <textarea class="form-control" name="body" placeholder="Оставить комментарий" style="height: 220px"></textarea>
-					  </div>
-					  
-					  <button type="submit" class="btn btn-default">Опубликовать</button>
-				</form>
-			</dv>
+						</li>
+					</article>
+				</lu>
+			@endforeach
+			<?php echo $comments->render() ?>
+			<hr>
+			<div class="card">
+				<dv class="card-block">
+				@if (Auth::guest())
+					<form method="POST" action="/posts/{{ $topic->id }}/comments">
+						{{ csrf_field() }}
+						<div class="form-group">
+						    <input type="text" class="form-control" name="body" placeholder="Вам необходимо зарегестрироваться что бы оставить комментарии" disabled>
+						  </div>
+						  <button type="submit" class="btn btn-default" disabled>Опубликовать</button>
+					</form>
+				@else
+					<form method="POST" action="/posts/{{ $topic->id }}/comments">
+						{{ csrf_field() }}
+						<div class="form-group">
+						    <textarea class="form-control" name="body" placeholder="Оставить комментарий" style="height: 220px"></textarea>
+						  </div>
+						  
+						  <button type="submit" class="btn btn-default">Опубликовать</button>
+					</form>
+				</dv>
+			</div>
 		</div>
-		</div>
+		@endif
     </div>
   </body>
 </html>

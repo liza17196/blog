@@ -36,4 +36,3 @@ Route::post('/posts/{topic}/comments', 'CommentController@create');	//созда
 
 
 
-

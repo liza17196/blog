@@ -17,8 +17,9 @@ class TopicController extends Controller
 
     public function index($id) {       //вывод списка тем для определенного раздела
         $title = Section::find($id);        //вывод названия раздела
-
-        return view('pages.topics', compact('title'));
+        $last_topic = Section::find($id)->topics()->orderby('created_at', 'desc')->first();
+        dd($last_topic);
+        return view('pages.topics', compact('title', 'last_topic'));
     }
 
     public function create()
@@ -56,8 +57,9 @@ class TopicController extends Controller
     public function show($id)                       //вывод страницы определенной темы
     {
         $topic = Topic::find($id);
+        $comments = Topic::find($id)->comments()->paginate(5);
 
-        return view('pages.topic', compact('topic'));
+        return view('pages.topic', compact('topic', 'comments'));
     }
 
     public function edit($id)
