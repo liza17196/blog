@@ -16,10 +16,10 @@ class TopicController extends Controller
 {
 
     public function index($id) {       //вывод списка тем для определенного раздела
+
         $title = Section::find($id);        //вывод названия раздела
-        $last_topic = Section::find($id)->topics()->orderby('created_at', 'desc')->first();
-        dd($last_topic);
-        return view('pages.topics', compact('title', 'last_topic'));
+        
+        return view('pages.topics', compact('title'));
     }
 
     public function create()

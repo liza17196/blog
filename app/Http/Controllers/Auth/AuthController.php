@@ -61,12 +61,7 @@ class AuthController extends Controller
     protected function create(array $data)
     {
         $data['avatar']->move(public_path("/uploads"), $data['avatar']->getClientOriginalName());
-        
-        //getRealPath
-        // $filename = time() . '.' . 
-        // // $request->file('image')->getClientOriginalExtension();
-
-
+        // added this to move our img into public directory
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],

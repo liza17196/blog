@@ -21,9 +21,10 @@ class SectionController extends Controller
      */
     public function index()                                 //вывод всех разделов, последний добавленный - первый
     {
+        $last_topic = Section::orderby('created_at', 'desc')->first();
         $sections = Section::latest()->get();
 
-        return view('pages.index', compact('sections'));
+        return view('pages.index', compact('sections','last_topic'));
     }
 
     /**
@@ -33,7 +34,22 @@ class SectionController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.new_section');
+    }
+
+    public function new_section() 
+    {
+        $this->validate(request(), [
+
+            'section' => 'required',
+        ]);
+
+        Section::create([
+
+            'section' => request('section'),
+        ]);
+
+        return redirect('/');
     }
 
     /**

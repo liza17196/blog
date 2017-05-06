@@ -34,6 +34,9 @@ Route::get('/create', 'TopicController@create');				//страница созд�
 Route::get('/create', 'TopicController@option');
 Route::post('/posts', 'TopicController@new_topic');				//создание новой темы
 
+Route::get('/new_section', 'SectionController@create');				//страница создания нового раздела
+Route::post('/sections/new_section', 'SectionController@new_section');				//создание нового раздела
+
 Route::get('/sections/{section}', 'TopicController@index');		//вывод страницы с темами раздела
 Route::get('/posts/{topic}', 'TopicController@show');			//вывод темы
 

@@ -1,11 +1,14 @@
 <nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse">
-      <a class="navbar-brand" href="{{ url('/') }}">Blog</a>
+      <a class="navbar-brand" href="{{ url('/') }}">Блог</a>
 
       <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
         @if(Auth::user())
           <li class="nav-item">
-            <a class="nav-link" href="{{ url('/create') }}">Create a new topic</a>
+            <a class="nav-link" href="{{ url('/create') }}">Создать тему</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url('/new_section') }}">Создать раздел</a>
           </li>
         @endif
         </ul>
@@ -14,10 +17,10 @@
         <div>
           <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-              <a class="nav-link" href="{{ url('/login') }}">Login</a>
+              <a class="nav-link" href="{{ url('/login') }}">Вход</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{ url('/register') }}">Register</a>
+              <a class="nav-link" href="{{ url('/register') }}">Регистрация</a>
             </li>
           </ul>
         </div>
@@ -25,13 +28,13 @@
         <div>
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-              <a class="nav-link" href="{{ url('/profile') }}">Profile</a>
+              <a class="nav-link" href="{{ url('/profile') }}">Профиль</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{ url('/setting/{id}') }}">Settings</a>
+              <a class="nav-link" href="{{ url('/setting/{id}') }}">Настройки</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{ url('/logout') }}">Logout</a>
+              <a class="nav-link" href="{{ url('/logout') }}">Выход</a>
             </li>
           </ul>
         </div>
