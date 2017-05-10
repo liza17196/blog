@@ -9,7 +9,7 @@
         "laravel/framework": "5.1.*",
         "intervention/image": "^2.3",
         "unisharp/laravel-filemanager": "^1.7",
-        "zizaco/entrust": "^1.8"
+        "zizaco/entrust": "dev-laravel-5"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
@@ -51,6 +51,4 @@
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
-
-    "zizaco/entrust": "5.1.x-dev"
 }

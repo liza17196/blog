@@ -11,6 +11,8 @@ use Auth;
 use App\User;
 use App\Topic;
 use App\Section;
+use App\Role;
+use App\Permission;
 use Image;
 
 class UserController extends Controller
@@ -27,6 +29,18 @@ class UserController extends Controller
 
     public function index()
     {
+        $owner = new Role();
+        $owner->name         = 'owner';
+        $owner->display_name = 'Project Owner'; // optional
+        $owner->description  = 'User is the owner of a given project'; // optional
+        $owner->save();
+
+        $admin = new Role();
+        $admin->name         = 'admin';
+        $admin->display_name = 'User Administrator'; // optional
+        $admin->description  = 'User is allowed to manage and edit other users'; // optional
+        $admin->save(); 
+
         return view('pages.profile', array('user'=>Auth::user() ));
     }
 

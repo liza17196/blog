@@ -47,7 +47,7 @@ class AuthController extends Controller
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
             'phone' => 'required|unique:users|max:20',
-            'avatar' => 'required | mimes:jpg,png | max:1400',
+            'avatar' => 'required |  mimes:jpeg,jpg,png | max:1400',
             'password' => 'required|confirmed|min:6',
         ]);
     }

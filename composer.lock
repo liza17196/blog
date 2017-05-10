@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "25f4c3631f908fadd3678487ea1bfa1f",
+    "content-hash": "2441c0cf69d2cd54ccaecb1f9720954b",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -2196,23 +2196,22 @@
         },
         {
             "name": "zizaco/entrust",
-            "version": "1.8.0",
+            "version": "dev-laravel-5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Zizaco/entrust.git",
-                "reference": "992e484f90a4d00b8ec0f42e8a59ba0b07ba1e09"
+                "reference": "3936ecf81efe2e124998b657a7adf03106e279e6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Zizaco/entrust/zipball/992e484f90a4d00b8ec0f42e8a59ba0b07ba1e09",
-                "reference": "992e484f90a4d00b8ec0f42e8a59ba0b07ba1e09",
+                "url": "https://api.github.com/repos/Zizaco/entrust/zipball/3936ecf81efe2e124998b657a7adf03106e279e6",
+                "reference": "3936ecf81efe2e124998b657a7adf03106e279e6",
                 "shasum": ""
             },
             "require": {
-                "illuminate/cache": "~5.0",
                 "illuminate/console": "~5.0",
                 "illuminate/support": "~5.0",
-                "php": ">=5.5.0"
+                "php": ">=5.4.0"
             },
             "require-dev": {
                 "illuminate/database": "~5.0",
@@ -2260,7 +2259,7 @@
                 "permission",
                 "roles"
             ],
-            "time": "2016-12-29T06:24:46+00:00"
+            "time": "2016-03-05 04:51:31"
         }
     ],
     "packages-dev": [
@@ -3653,7 +3652,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "zizaco/entrust": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

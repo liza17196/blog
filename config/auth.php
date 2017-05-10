@@ -64,4 +64,12 @@ return [
         'expire' => 60,
     ],
 
+    'providers' => [
+    'users' => [
+        'driver' => 'eloquent',
+        'model' => Namespace\Of\Your\User\Model\User::class,
+        'table' => 'users',
+    ],
+],
+
 ];
