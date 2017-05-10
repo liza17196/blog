@@ -24,7 +24,7 @@
                         <div class="form-group{{$errors->has('email') ? 'has-error' : ''}}">
                             <label for="email" class="col-md-4 control-label">E-mail</label>
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}">
+                                <input id="email" type="email" class="form-control" name="email" pattern="^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}" placeholder="yourmail@mail.ru" value="{{ old('email') }}">
                                 @if($errors->has('email'))
                                     <div class="help-block">
                                         <string>{{ $errors->first('email') }}</string>
@@ -35,7 +35,7 @@
                         <div class="form-group{{$errors->has('phone') ? 'has-error' : ''}}">
                             <label for="phone" class="col-md-4 control-label">Phone</label>
                             <div class="col-md-6">
-                                <input id="phone" type="phone" class="form-control" name="phone" value="{{ old('phone') }}">
+                                <input id="phone" type="phone" class="form-control" name="phone" pattern="^\+\d{2}\(\d{3}\)\d{3}-\d{2}-\d{2}$" value="{{ old('phone') }}" placeholder="+38(012)345-67-89" >
                                 @if($errors->has('phone'))
                                     <div class="help-block">
                                         <string>{{ $errors->first('phone') }}</string>

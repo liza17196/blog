@@ -85,14 +85,14 @@ class UserController extends Controller
         if($request->hasFile('new-avatar')) {
             $avatar = $request->file('new-avatar');
             $filename = time() . '.' . $avatar->getClientOriginalExtension();
-            Image::make($avatar)->resize(150, 150)->save( public_path('/uploads/avatars/' . $filename) );
+            Image::make($avatar)->resize(150, 150)->save(public_path('/uploads/avatars/' . $filename));
 
             $user = Auth::user();
-            $user->avatar = $filename;
+            $user->avatar ='/uploads/avatars/' . $filename;
             $user->save();
         }
 
-        return view('pages/profile', array('user' => Auth::user()) );
+        return back();
     }
     public function update(Request $request, $id)
     {

@@ -25,7 +25,7 @@ Route::get('/sections', 'SectionController@index');				//главные стра
 
 Route::get('/profile', 'UserController@index');					//страница пользователя
 Route::get('/setting/{id}', 'UserController@edit');				//страница настройки
-Route::post('/profile', 'UserController@update_avatar');		//загрузка новой фотки
+Route::post('/profile/new_avatar', 'UserController@update_avatar');		//загрузка новой фотки
 
 Route::get('/profile/{id}/delete', 'UserController@destroy');	//удаление пользователя
 Route::post('/profile/{id}/update', 'UserController@update');	//изменение имени пользователя

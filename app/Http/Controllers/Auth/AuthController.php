@@ -46,8 +46,8 @@ class AuthController extends Controller
         return Validator::make($data, [
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
-            'phone' => 'required|unique:users|max:10',
-            'avatar' => 'required | mimes:jpeg,jpg,png | max:1400',
+            'phone' => 'required|unique:users|max:20',
+            'avatar' => 'required | mimes:jpg,png | max:1400',
             'password' => 'required|confirmed|min:6',
         ]);
     }
@@ -60,13 +60,13 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
-        $data['avatar']->move(public_path("/uploads"), $data['avatar']->getClientOriginalName());
+        $data['avatar']->move(public_path("/uploads/avatars"), $data['avatar']->getClientOriginalName());
         // added this to move our img into public directory
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'phone' => $data['phone'],
-            'avatar' => '/uploads/'.$data['avatar']->getClientOriginalName(),
+            'avatar' => '/uploads/avatars/'.$data['avatar']->getClientOriginalName(),
             'password' => bcrypt($data['password']),
         ]);
     }
