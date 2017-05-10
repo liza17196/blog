@@ -6,6 +6,9 @@ use App\User;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Image;
+use Input; 
+
 
 class AuthController extends Controller
 {
@@ -44,7 +47,7 @@ class AuthController extends Controller
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
             'phone' => 'required|unique:users|max:10',
-            'avatar' => 'max:255',
+            'avatar' => 'required | mimes:jpeg,jpg,png | max:1400',
             'password' => 'required|confirmed|min:6',
         ]);
     }
@@ -57,17 +60,13 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
-        // dd($data);
-        // $filename = time() . '.' . 
-        // $request->file('image')->getClientOriginalExtension();
-
-        // $image = Image::make($avatar)->resize(150, 150)->save( public_path('/uploads/avatars/' . $filename) );
-        
+        $data['avatar']->move(public_path("/uploads"), $data['avatar']->getClientOriginalName());
+        // added this to move our img into public directory
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'phone' => $data['phone'],
-            'avatar' => $data['avatar'],
+            'avatar' => '/uploads/'.$data['avatar']->getClientOriginalName(),
             'password' => bcrypt($data['password']),
         ]);
     }
