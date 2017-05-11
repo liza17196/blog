@@ -45,6 +45,8 @@ Route::post('/posts/{topic}/comments', 'CommentController@create');	//созда
 Route::get('/posts/{topic}/delete', 'TopicController@destroy');		//удаление поста
 Route::get('/posts/{topic}/comments/delete', 'CommentController@destroy');		//удаление коммента
 
+Route::get('/user_list', 'Admin\AdminController@index');		//список пользователей
+Route::post('/admin/setting', 'Admin\AdminController@create');	//фильтр слов
 
 
 

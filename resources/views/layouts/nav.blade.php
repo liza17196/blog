@@ -29,6 +29,11 @@
         @else
         <div>
         <ul class="navbar-nav mr-auto">
+            @if(Auth::user()->hasRole('user admin'))
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url('/user_list') }}">Список пользователей</a>
+            </li>
+            @endif
             <li class="nav-item">
               <a class="nav-link" href="{{ url('/profile') }}">Профиль</a>
             </li>
