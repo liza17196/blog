@@ -55,6 +55,11 @@
 	<h2>Тема '{{ $topic->title }}'</h2><p style="font-size: 14px; color: #808080">{{ $topic->created_at->toFormattedDateString() }} &nbsp; Автор: &nbsp; {{ $topic->user->name }}</p><br>
 	<br>
 		<p>{!! $topic->body !!}</p>
+		@if(Auth::user()->hasRole('user admin'))
+		<form method="GET" action="{{ $topic->id }}/delete">
+			<input type="submit" value="Удалить тему" class="btn btn-danger">
+		</form>
+		@endif
 		<hr>
 		<div class='comments'>
 		<h3>Комментарии</h3>
@@ -66,6 +71,20 @@
 							<strong>
 								<p>{{ $comment->created_at->diffForHumans() }}: &nbsp;</p> <!-- Вывод даты к коментарию -->
 								<p>{{ $comment->user->name }}</p>
+								@foreach($owners as $owner)
+									@if(($owner->pivot->user_id == Auth::user()->id))
+										@if(Auth::user()->can('delete-comment'))
+											<form method="GET" action="{{ $comment->id }}/comments/delete">
+												<input type="submit" value="Удалить комментарий" class="btn btn-danger">
+											</form>
+										@endif
+									@endif	
+								@endforeach
+								@if(Auth::user()->hasRole('user admin'))
+									<form method="GET" action="{{ $comment->id }}/comments/delete">
+										<input type="submit" value="Удалить комментарий" class="btn btn-danger">
+									</form>
+								@endif
 							</strong>	
 							{!! $comment->body !!}		<!-- Вывод коментарий -->
 

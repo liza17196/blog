@@ -24,14 +24,20 @@ class TopicController extends Controller
 
     public function create()
     {
-        return view('pages.create');
+        if(Auth::user()) { 
+            return view('pages.create');
+        }
+        return back();
     }
 
     public function option() {
 
         $options = Section::all();
 
-        return view('pages.create', compact('options'));
+        if(Auth::user()) { 
+            return view('pages.create', compact('options'));
+        }
+        return back();
     }
 
     public function new_topic(Section $options)
@@ -58,8 +64,10 @@ class TopicController extends Controller
     {
         $topic = Topic::find($id);
         $comments = Topic::find($id)->comments()->paginate(5);
+        $variable = Topic::find($id)->user_id;
+        $owners = User::find($variable)->roles()->get();
 
-        return view('pages.topic', compact('topic', 'comments'));
+        return view('pages.topic', compact('topic', 'comments', 'owners'));
     }
 
     public function edit($id)
@@ -75,7 +83,9 @@ class TopicController extends Controller
 
     public function destroy($id)
     {
-        //
+        Topic::find($id)->delete();
+
+        return redirect('/');
     }
 
 }

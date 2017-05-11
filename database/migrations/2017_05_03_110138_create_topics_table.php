@@ -12,6 +12,7 @@ class CreateTopicsTable extends Migration
      */
     public function up()
     {
+
         Schema::create('topics', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id');
@@ -29,6 +30,8 @@ class CreateTopicsTable extends Migration
      */
     public function down()
     {
+        
         Schema::drop('topics');
+        
     }
 }

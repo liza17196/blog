@@ -7,9 +7,11 @@
           <li class="nav-item">
             <a class="nav-link" href="{{ url('/create') }}">Создать тему</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{{ url('/new_section') }}">Создать раздел</a>
-          </li>
+            @if(Auth::user()->hasRole('user admin'))
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url('/new_section') }}">Создать раздел</a>
+            </li>
+            @endif
         @endif
         </ul>
         </div>

@@ -29,4 +29,3 @@ class CreateSectionsTable extends Migration
         Schema::drop('sections');
     }
 }
-

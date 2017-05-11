@@ -29,17 +29,6 @@ class UserController extends Controller
 
     public function index()
     {
-        $owner = new Role();
-        $owner->name         = 'owner';
-        $owner->display_name = 'Project Owner'; // optional
-        $owner->description  = 'User is the owner of a given project'; // optional
-        $owner->save();
-
-        $admin = new Role();
-        $admin->name         = 'admin';
-        $admin->display_name = 'User Administrator'; // optional
-        $admin->description  = 'User is allowed to manage and edit other users'; // optional
-        $admin->save(); 
 
         return view('pages.profile', array('user'=>Auth::user() ));
     }
@@ -127,6 +116,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
+        dd('hey');
         Auth::logout();
         User::find($id)->delete();
 

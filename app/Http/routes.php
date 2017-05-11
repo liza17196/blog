@@ -42,5 +42,9 @@ Route::get('/posts/{topic}', 'TopicController@show');			//вывод темы
 
 Route::post('/posts/{topic}/comments', 'CommentController@create');	//создает новый коммент
 
+Route::get('/posts/{topic}/delete', 'TopicController@destroy');		//удаление поста
+Route::get('/posts/{topic}/comments/delete', 'CommentController@destroy');		//удаление коммента
+
+
 
 

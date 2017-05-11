@@ -11,6 +11,7 @@ use Auth;
 use App\User;
 use App\Topic;
 use App\Section;
+use App\Role;
 
 class SectionController extends Controller
 {
@@ -34,7 +35,14 @@ class SectionController extends Controller
      */
     public function create()
     {
-        return view('pages.new_section');
+
+        if(Auth::user()) {
+
+            if(Auth::user()->hasRole('user admin')) {
+                return view('pages.new_section');
+            }
+        }    
+        return back();
     }
 
     public function new_section() 

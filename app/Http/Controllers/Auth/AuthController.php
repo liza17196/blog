@@ -62,12 +62,15 @@ class AuthController extends Controller
     {
         $data['avatar']->move(public_path("/uploads/avatars"), $data['avatar']->getClientOriginalName());
         // added this to move our img into public directory
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'phone' => $data['phone'],
             'avatar' => '/uploads/avatars/'.$data['avatar']->getClientOriginalName(),
             'password' => bcrypt($data['password']),
         ]);
+        $user->attachRole(1);
+
+        return $user;
     }
 }
