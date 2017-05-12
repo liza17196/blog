@@ -19,13 +19,20 @@
                     <input type="submit" value="Отправить" class="btn btn-sm btn-default" style="margin-top: 15px; padding: 5px 10px; font-size: 15px">
 				</form>
 				<br>
+				@if(Auth::user()->hasRole('user owner'))
+					<form method="GET" action="/profile/{{ Auth::user()->id }}/delete">
+						<label for="delete" style="font-size: 20px">Удалить страницу:</label><br>
+						<input type="submit" id="delete" value="delete" class="btn btn-sm btn-default" style="padding: 5px 10px; font-size: 15px">
+					</form>
+					<br>
+				@endif
 				@if(Auth::user()->hasRole('user admin'))
 					<form method="POST" action="/profile/{{ Auth::user()->id }}/filter">
-					<input type="hidden" name="_token" value="{{ csrf_token() }}">
-					<label for="filter" style="font-size: 20px">Фильтр слов:</label>
-					<input type="text" name="filter" id="filter">
-					<input type="submit" value="Отправить" class="btn btn-sm btn-default" style="margin-top: 15px; padding: 5px 10px; font-size: 15px">
-				</form>
+						<input type="hidden" name="_token" value="{{ csrf_token() }}">
+						<label for="filter" style="font-size: 20px">Фильтр слов:</label>
+						<input type="text" name="filter" id="filter">
+						<input type="submit" value="Отправить" class="btn btn-sm btn-default" style="margin-top: 15px; padding: 5px 10px; font-size: 15px">
+					</form>
 				@endif
 			</div>
 		</div>

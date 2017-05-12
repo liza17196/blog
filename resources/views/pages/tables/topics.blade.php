@@ -8,13 +8,13 @@
                   <th>Дата</th>
                 </tr>
               </thead>
-              @foreach($title->topics as $topic)
-              <tbody>
+              @foreach($result as $comment)
+                <tbody>
                 <tr>
-                  <td><a href="/posts/{{ $topic->id }}">{{ $topic->title }}</a></td>
-                  <td>{!! $topic->body !!}</td>
-                  <td>{{ $topic->user->name }}</td>
-                  <td>{{ $topic->created_at->toFormattedDateString() }}</td>
+                  <td><a href="/posts/{{ $comment['id'] }}">{{ $comment['name'] }}</a></td>
+                  <td>{!! $comment['last_comment'] !!}</td>
+                  <td>{{ $comment['author'] }}</td>
+                  <td>{{ $comment['created_at']->toFormattedDateString() }}</td>
                 </tr>
               </tbody>
               @endforeach

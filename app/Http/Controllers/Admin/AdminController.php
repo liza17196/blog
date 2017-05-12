@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 
 use Auth;
 use App\User;
+use App\Filter;
 
 class AdminController extends Controller
 {
@@ -38,7 +39,17 @@ class AdminController extends Controller
      */
     public function create()
     {
-        //
+        $this->validate(request(), [
+
+            'filter' => 'required',
+        ]);
+
+        Filter::create([
+
+            'filter' => request('filter'),
+        ]);
+
+        return back();
     }
 
     /**

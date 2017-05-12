@@ -8,13 +8,13 @@
                   <th>Дата</th>
                 </tr>
               </thead>
-              @foreach($sections as $section)
+              @foreach($result as $section)
               <tbody>
                 <tr>
-                  <td><a href="/sections/{{ $section->id }}">{{ $section->section }}</a></td>
-                  <td>{{ $last_topic->title }}</td>
-                  <td>{{ $last_topic->user->name }}</td>
-                  <td>{{ $section->created_at->toFormattedDateString() }}</td>
+                  <td><a href="/sections/{{ $section['id'] }}">{{ $section['name'] }}</a></td>
+                  <td>{{ $section['last_topic'] }}</td>
+                  <td>{{ $section['last_topic_author'] }}</td>
+                  <td>{{ $section['created_at']->toFormattedDateString() }}</td>
                 </tr>
               </tbody>
               @endforeach

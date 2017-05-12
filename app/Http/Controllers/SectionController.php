@@ -23,9 +23,21 @@ class SectionController extends Controller
     public function index()                                 //вывод всех разделов, последний добавленный - первый
     {
         $last_topic = Topic::orderby('created_at', 'desc')->first();
-        $sections = Section::latest()->get();
+        $sections = Section::with('topics')->latest()->get();
+        $result = [];
+        foreach ($sections as $key => $section) {
+            $result[] = [
+                'id' => $section->id,
+                'name' => $section->section,
+                'last_topic_id' => $section->topics->sortByDesc('created_at')->first()->id, 
+                'last_topic' => $section->topics->sortByDesc('created_at')->first()->title,
+                'last_topic_author' => $section->topics->sortByDesc('created_at')->first()->user->name,
+                'created_at' => $section->created_at
+            ];
+        }
+        // dd($result);
 
-        return view('pages.index', compact('sections','last_topic'));
+        return view('pages.index', compact('result'));
     }
 
     /**

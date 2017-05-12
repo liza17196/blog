@@ -17,9 +17,23 @@ class TopicController extends Controller
 
     public function index($id) {       //вывод списка тем для определенного раздела
 
-        $title = Section::find($id);        //вывод названия раздела
+        $section = Section::find($id);
+        $title = $section->section;
+        $topics = $section->topics;        //вывод названия раздела
+        // $topics = Topic::->latest()->get();
+        $result = [];
+        foreach ($topics as $key => $topic) {
+            $result[] = [
+                'id' => $topic->id,
+                'name' => $topic->title,
+                'last_comment' => $topic->comments->sortByDesc('created_at')->first() ? $topic->comments->sortByDesc('created_at')->first()->body : 'Нет сообщений',
+                'author' => $topic->user->name,
+                'created_at' => $topic->created_at
+            ];
+        }
+        // dd($topics);
         
-        return view('pages.topics', compact('title'));
+        return view('pages.topics', compact('title', 'result'));
     }
 
     public function create()
