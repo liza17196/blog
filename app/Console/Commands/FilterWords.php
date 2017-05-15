@@ -61,18 +61,6 @@ class FilterWords extends Command
                             $comment->save();
                             $this->info($comment['body']);
                         }
-
-
-                            // $new_words = Comment::where('body', 'like', '%' . $filter->filter . '%')
-                            //         // ->update($piece => $new_value)
-                            //         ->get();
-                            //     foreach($new_words as $new_word) {
-                            //     }
-                            // $user->name = $new_nickname;
-                            // $user->save();
-
-                            // UPDATE comments SET BODY =REPLACE(body, '" . $piece . "', '" . $new_value . "')
-
                     }
                 }
         }
