@@ -33,3 +33,15 @@ body {
     padding-left: 0;
   }
 }
+
+a,
+a:focus {
+  margin: 0 10px;
+  color: #9C9C9C;
+  text-decoration: none;
+}
+
+a:hover {
+  color:#DCDCDC;
+  text-decoration: none;
+}

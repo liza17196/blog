@@ -12,6 +12,7 @@ use App\User;
 use App\Topic;
 use App\Section;
 use App\Comment;
+use Carbon\Carbon;
 
 class CommentController extends Controller
 {
@@ -20,9 +21,20 @@ class CommentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
-        //
+        $comments = Topic::find($id)->comments()->paginate(5);
+        $result = [];
+        foreach ($comments as $key => $comment) {
+            $transform = [
+                'body' => $comment->body,
+                'author' => $comment->user->name,
+                'date' => Carbon::parse($comment->created_at)->toFormattedDateString()
+            ];
+            array_push($result,$transform);
+        };
+
+        return $this->response->setData(false, $result)->get();
     }
 
     /**

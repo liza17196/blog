@@ -11,29 +11,39 @@ use Auth;
 use App\User;
 use App\Topic;
 use App\Section;
+use Response;
+use Carbon\Carbon;
 
 class TopicController extends Controller
 {
 
     public function index($id) {       //вывод списка тем для определенного раздела
 
-        $section = Section::find($id);
-        $title = $section->section;
-        $topics = $section->topics;        //вывод названия раздела
+        $section = Section::with('topics')->find($id);
+        // $title = $section->section;
+        // $topics = $section->topics;        //вывод названия раздела
         // $topics = Topic::->latest()->get();
         $result = [];
-        foreach ($topics as $key => $topic) {
-            $result[] = [
+        foreach ($section['topics'] as $key => $topic) {
+            $transform = [
                 'id' => $topic->id,
                 'name' => $topic->title,
                 'last_comment' => $topic->comments->sortByDesc('created_at')->first() ? $topic->comments->sortByDesc('created_at')->first()->body : 'Нет сообщений',
                 'author' => $topic->user->name,
-                'created_at' => $topic->created_at
+                'created_at' => Carbon::parse($topic->created_at)->toFormattedDateString()            
             ];
+            array_push($result,$transform);
         }
-        // dd($topics);
-        
-        return view('pages.topics', compact('title', 'result'));
+
+          return $this->response->setData(false, $result)->get();
+    }
+
+    public function show_section($id)
+    {
+        $section = Section::with('topics')->find($id);
+        $result = ['section' => $section->section];
+
+        return $this->response->setData(false, $result)->get();
     }
 
     public function create()
@@ -76,12 +86,23 @@ class TopicController extends Controller
 
     public function show($id)                       //вывод страницы определенной темы
     {
-        $topic = Topic::find($id);
-        $comments = Topic::find($id)->comments()->paginate(5);
-        $variable = Topic::find($id)->user_id;
-        $owners = User::find($variable)->roles()->get();
+        $topics = Topic::find($id);
 
-        return view('pages.topic', compact('topic', 'comments', 'owners'));
+        $result = [];
+        foreach ($topics as $key => $topic) {
+            $result = [
+                'title' => $topics->title,
+                'body' => $topics->body,
+                'author' => $topics->user->name,
+                'created_at' => Carbon::parse($topics->created_at)->toFormattedDateString()
+            ];
+        };
+        // $variable = Topic::find($id)->user_id;
+        // $owners = User::find($variable)->roles()->get();
+        // return view('pages.topic', compact('topic', 'comments', 'owners'));
+        // dd($result);
+
+        return $this->response->setData(false, $result)->get();
     }
 
     public function edit($id)

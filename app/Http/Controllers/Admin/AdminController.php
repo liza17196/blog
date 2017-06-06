@@ -20,17 +20,17 @@ class AdminController extends Controller
      */
     public function index()
     {
-        if(Auth::user()) {
-            if(Auth::user()->hasRole('user admin')){
-                $users =  User::latest()->get();
-         
-                return view('pages.admin.user_list', compact('users'));
+        // if(Auth::user()) {
+        //     if(Auth::user()->hasRole('user admin')){
+                $users =  User::latest()->get()->toArray();
+                // dd($users);
+            return $this->response->setData(false, $users)->get();
             }
 
-            return back();
-        }
-        return back();
-    }
+    //         return back();
+    //     }
+    //     return back();
+    // }
 
     /**
      * Show the form for creating a new resource.

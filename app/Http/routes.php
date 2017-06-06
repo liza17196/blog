@@ -11,42 +11,53 @@
 |
 */
 
-// Authentication Routes...
-Route::get('login', 'Auth\AuthController@getLogin');
-Route::post('login', 'Auth\AuthController@postLogin');
-Route::get('logout', 'Auth\AuthController@getLogout');
+Route::group(['prefix' => 'blog'], function()
+{
 
-// Registration Routes...
-Route::get('register', 'Auth\AuthController@getRegister');
-Route::post('register', 'Auth\AuthController@postRegister');
+	// Authentication Routes...
+	Route::get('/login', 'Auth\AuthController@getLogin');
+	Route::post('/login', 'Auth\AuthController@postLogin');
+	Route::get('/logout', 'Auth\AuthController@getLogout');
 
-Route::get('/', 'SectionController@index');					
-Route::get('/sections', 'SectionController@index');				//главные страницы
+	// Registration Routes...
+	Route::get('/register', 'Auth\AuthController@getRegister');
+	Route::post('/register', 'Auth\AuthController@postRegister');
+						
+	Route::get('/sections', 'SectionController@index');				//главные страницы
 
-Route::get('/profile', 'UserController@index');					//страница пользователя
-Route::get('/setting/{id}', 'UserController@edit');				//страница настройки
-Route::post('/profile/new_avatar', 'UserController@update_avatar');		//загрузка новой фотки
+	Route::get('/profile', 'UserController@index');					//страница пользователя
+	Route::get('/setting/{id}', 'UserController@edit');				//страница настройки
+	Route::post('/profile/new_avatar', 'UserController@update_avatar');		//загрузка новой фотки
 
-Route::get('/profile/{id}/delete', 'UserController@destroy');	//удаление пользователя
-Route::post('/profile/{id}/update', 'UserController@update');	//изменение имени пользователя
+	Route::get('/profile/{id}/delete', 'UserController@destroy');	//удаление пользователя
+	Route::post('/profile/{id}/update', 'UserController@update');	//изменение имени пользователя
 
-Route::get('/create', 'TopicController@create');				//страница создания новой темы
-Route::get('/create', 'TopicController@option');
-Route::post('/posts', 'TopicController@new_topic');				//создание новой темы
+	Route::get('/create', 'TopicController@create');				//страница создания новой темы
+	Route::get('/create', 'TopicController@option');
+	Route::post('/posts', 'TopicController@new_topic');				//создание новой темы
 
-Route::get('/new_section', 'SectionController@create');				//страница создания нового раздела
-Route::post('/sections/new_section', 'SectionController@new_section');				//создание нового раздела
+	Route::get('/new_section', 'SectionController@create');				//страница создания нового раздела
+	Route::post('/sections/new_section', 'SectionController@new_section');				//создание нового раздела
 
-Route::get('/sections/{section}', 'TopicController@index');		//вывод страницы с темами раздела
-Route::get('/posts/{topic}', 'TopicController@show');			//вывод темы
+	Route::get('/sections/{section}', 'TopicController@index');		//вывод страницы с темами раздела
+	Route::get('/sections/{section}/title', 'TopicController@show_section');		//вывод названия раздела странице с темами раздела
+	Route::get('/posts/{topic}', 'TopicController@show');			//вывод темы
+	Route::get('/posts/{topic}/comments', 'CommentController@index');	//вывод комментариев на странице 
 
-Route::post('/posts/{topic}/comments', 'CommentController@create');	//создает новый коммент
+	Route::post('/posts/{topic}/comments', 'CommentController@create');	//создает новый коммент
 
-Route::get('/posts/{topic}/delete', 'TopicController@destroy');		//удаление поста
-Route::get('/posts/{topic}/comments/delete', 'CommentController@destroy');		//удаление коммента
+	Route::get('/posts/{topic}/delete', 'TopicController@destroy');		//удаление поста
+	Route::get('/posts/{topic}/comments/delete', 'CommentController@destroy');		//удаление коммента
 
-Route::get('/user_list', 'Admin\AdminController@index');		//список пользователей
-Route::post('/profile/{id}/filter', 'Admin\AdminController@create');	//фильтр слов
+	Route::get('/user_list', 'Admin\AdminController@index');		//список пользователей
+	Route::post('/profile/{id}/filter', 'Admin\AdminController@create');	//фильтр слов
 
 
+});
+	Route::get( '/{slug?}',
+				[function($slug)
+					{
+						return view('pages.index');
+					}
+				])->where('slug', '.+');
 

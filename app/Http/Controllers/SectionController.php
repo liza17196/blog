@@ -12,6 +12,8 @@ use App\User;
 use App\Topic;
 use App\Section;
 use App\Role;
+use Response;
+use Carbon\Carbon;
 
 class SectionController extends Controller
 {
@@ -32,12 +34,10 @@ class SectionController extends Controller
                 'last_topic_id' => $section->topics->sortByDesc('created_at')->first()->id, 
                 'last_topic' => $section->topics->sortByDesc('created_at')->first()->title,
                 'last_topic_author' => $section->topics->sortByDesc('created_at')->first()->user->name,
-                'created_at' => $section->created_at
+                'created_at' => Carbon::parse($section->created_at)->toFormattedDateString()
             ];
         }
-        // dd($result);
-
-        return view('pages.index', compact('result'));
+        return $this->response->setData(false, $result)->get();
     }
 
     /**

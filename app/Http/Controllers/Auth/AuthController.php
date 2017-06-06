@@ -11,7 +11,7 @@ use Input;
 
 
 class AuthController extends Controller
-{
+{        
     /*
     |--------------------------------------------------------------------------
     | Registration & Login Controller
@@ -43,6 +43,7 @@ class AuthController extends Controller
      */
     protected function validator(array $data)
     {
+        dd('here');
         return Validator::make($data, [
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
@@ -70,7 +71,6 @@ class AuthController extends Controller
             'password' => bcrypt($data['password']),
         ]);
         $user->attachRole(1);
-
         return $user;
     }
 }
