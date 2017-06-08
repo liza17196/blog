@@ -35,7 +35,6 @@ CommentStore.dispatchToken = AppDispatcher.register(function(payload) {
       case Constants.TOPIC_COMMENT_SUCCESS:
         _topicComment = data
         _isLoaded = true;
-        // console.log(_topicComment[0]);
       // debugger; 
 	    	break;
 

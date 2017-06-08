@@ -29,7 +29,7 @@ export default class App extends Component {
 
 	getState() {
 		return {
-				// login:UserStore.getLogin()
+				check:UserStore.getUser(),
 		}
 	}
 
@@ -43,18 +43,17 @@ export default class App extends Component {
 	// 	});
 	// }
 
-	// handleClick(event) {
-	//     event.preventDefault();
+	handleClick(event) {
+	    event.preventDefault();
+	    data = UserStore.getUser().id;
 		
-	//     actions.handle('LOGOUT_SUCCESS');
-	// }
+	    actions.handle('LOGOUT_ATTEMPT', data);
+	}
 
 	componentDidMount(){
-		UserStore.addChangeListener(this._onChange)
-		// if(UserStore.isAuthenticated()) {
-			
+		UserStore.addChangeListener(this._onChange);
 
-		// }
+		actions.handle('CHECK_ATTEMPT');
 
 	}
 
@@ -65,6 +64,7 @@ export default class App extends Component {
 
 	render(){
 		console.log(UserStore.isAuthenticated());
+		console.log(UserStore.getUser());
 		return(
 			<div>
 				<div>
@@ -104,7 +104,7 @@ export default class App extends Component {
 				            </li>
 
 				            <li className="nav-item for-user">
-				              <Link to='/profile'>Профиль</Link>
+				              <Link to={'/profile/'+ UserStore.getUser().id}>Профиль</Link>
 				            </li>
 				            <li className="nav-item for-user">
 				              <Link to='/setting'>Настройки</Link>

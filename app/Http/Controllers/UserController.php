@@ -15,6 +15,8 @@ use App\Role;
 use App\Permission;
 use Image;
 
+use Carbon\Carbon;
+
 class UserController extends Controller
 {
     /**
@@ -22,15 +24,11 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
 
     public function index()
     {
-
-        return view('pages.profile', array('user'=>Auth::user() ));
+        $user = Auth::user() ? Auth::user()->toArray() : [];
+        return $this->response->setData(false, $user)->get();
     }
 
     /**
@@ -60,9 +58,22 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Topic $user_id)
+    public function show()
     {
-        //
+        // $topics = Auth::user()->toArray();
+
+        $result = [];
+        foreach(Auth::user()->topics as $topic) {
+            $result[] = [
+                'id' => $topic->id,
+                'title' => $topic->title,
+                'section' => $topic->section->section,
+                'created_at' => Carbon::parse($topic->created_at)->toFormattedDateString(),
+                'updated_at' => Carbon::parse($topic->updated_at)->toFormattedDateString()
+            ]; 
+        // dd($result);
+        }
+        return $this->response->setData(false, $result)->get();
     }
 
     /**

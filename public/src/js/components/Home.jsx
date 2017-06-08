@@ -21,7 +21,7 @@ export default class Home extends Component {
 
 	componentDidMount(){
 		SectionStore.addChangeListener(this._HandleChange.bind(this))
-		actions.handle('TAKE_SECTIONS_ATTEMPT');
+		setTimeout(()=>{actions.handle('TAKE_SECTIONS_ATTEMPT')}, 0);
 	}
 
 	componentWillUnmount(){
@@ -29,6 +29,7 @@ export default class Home extends Component {
 	}
 
 	render(){
+		console.log(this.state.sectionList[0]);
 			return(
 				<div className="container">
 					<br />

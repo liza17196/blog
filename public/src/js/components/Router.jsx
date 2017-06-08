@@ -4,7 +4,7 @@ import App from './App';
 import Home from './Home';
 import New_Section from './New_Section';
 import Admin from './Admin';
-import Profile from './Profile';
+import Profile from './Profile/Profile';
 import Setting from './Setting';
 import Create from './create_topic/Create';
 import Topics from './Topics/Topics';
@@ -21,7 +21,7 @@ export default class Routes extends Component {
 			        <IndexRoute component={Home} />
 			        <Route path="/new_section" component={New_Section} />
 			        <Route path="/user_list" component={Admin} />
-			        <Route path="/profile" component={Profile} />
+			        <Route path="/profile/:user_id" component={Profile} />
 			        <Route path="/setting" component={Setting} />
 			        <Route path="/create" component={Create} />
 			        <Route path="/posts/:topic_id" component={TopicBody} />

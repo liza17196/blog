@@ -21,7 +21,7 @@ export default class Login extends Component {
 
 	getState() {
 		return {
-			register:UserStore.getLogin(),
+			register:UserStore.getUser(),
 			name: '',
 			email: '',
 			phone: '',

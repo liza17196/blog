@@ -13,6 +13,10 @@ module.exports = keyMirror({
 	SECTION_NAME_SUCCESS: null,
 	USERS_LIST_ATTEMPT: null,
 	USERS_LIST_SUCCESS: null,
+	PROFILE_INFO_ATTEMPT: null,
+	PROFILE_INFO_sUCCESS: null,
+	PROFILE_TABLE_SUCCESS: null,
+	PROFILE_TABLE_ATTEMPT: null,
 
 	LOGIN_ATTEMPT: null,
 	LOGIN_SUCCESS: null,
@@ -20,5 +24,8 @@ module.exports = keyMirror({
 	REGISTER_SUCCESS: null,
 	LOGOUT_ATTEMPT: null,
 	LOGOUT_SUCCESS: null,
+
+	CHECK_ATTEMPT: null,
+	CHECK_SUCCESS: null,
 
 });

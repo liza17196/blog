@@ -29,6 +29,7 @@ Route::group(['prefix' => 'blog'], function()
 	Route::get('/setting/{id}', 'UserController@edit');				//страница настройки
 	Route::post('/profile/new_avatar', 'UserController@update_avatar');		//загрузка новой фотки
 
+	Route::get('/profile/{id}/topics', 'UserController@show');		//вывод тем на стр пользователя
 	Route::get('/profile/{id}/delete', 'UserController@destroy');	//удаление пользователя
 	Route::post('/profile/{id}/update', 'UserController@update');	//изменение имени пользователя
 

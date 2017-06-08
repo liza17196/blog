@@ -30,7 +30,6 @@ module.exports = {
       // options.data.access_token = _token;
           options.data._token = window.data.csrf;
     }
-
       $.ajax(options)
         .done(function(res)
         {
@@ -43,6 +42,5 @@ module.exports = {
         })
         .fail(rh.handleError);
 
-debugger;
   }
 }

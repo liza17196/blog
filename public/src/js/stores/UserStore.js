@@ -11,9 +11,9 @@ var Constants = require('../constants');
 var _user = [];
 var _authenticated = false;
 
-var RegisterStore = extend({}, StandardStore, {
+var UserStore = extend({}, StandardStore, {
 
-	getLogin() {
+	getUser() {
 		return _user;
 	},
 
@@ -22,7 +22,7 @@ var RegisterStore = extend({}, StandardStore, {
   }
 
   });
-RegisterStore.dispatchToken = AppDispatcher.register(function(payload) {
+UserStore.dispatchToken = AppDispatcher.register(function(payload) {
       var action = payload.action;
       var data = action.data;
 
@@ -43,7 +43,7 @@ RegisterStore.dispatchToken = AppDispatcher.register(function(payload) {
 
         case Constants.LOGIN_ATTEMPT:
           _authenticated = false;
-        debugger;
+        // debugger;
           UserAPI.getLogin(data);
           break;
 
@@ -54,14 +54,39 @@ RegisterStore.dispatchToken = AppDispatcher.register(function(payload) {
         // debugger;
         break;
 
+      case Constants.LOGOUT_ATTEMPT: 
+        _authenticated = true;
+        // debugger;
+          UserAPI.getLogout(data);
+          break;
+      
+      case Constants.LOGOUT_SUCCESS: 
+        _user = [];
+        _authenticated = false;
+        //RouterStore.get().push('/')
+        // debugger;
+        break;
+
+      case Constants.CHECK_ATTEMPT: 
+        // debugger;
+          UserAPI.getCheck();
+          break;
+      
+      case Constants.CHECK_SUCCESS: 
+        _user = data;
+        //RouterStore.get().push('/')
+        // debugger;
+        break;
+
+
         default:
         return true;
       }
 
-      RegisterStore.emitChange();
+      UserStore.emitChange();
 
       return true;
 
     });
 
-module.exports = RegisterStore;
+module.exports = UserStore;
