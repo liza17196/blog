@@ -23,10 +23,11 @@ class CommentController extends Controller
      */
     public function index($id)
     {
-        $comments = Topic::find($id)->comments()->paginate(5);
+        $comments = Topic::find($id)->comments;
         $result = [];
         foreach ($comments as $key => $comment) {
             $transform = [
+                'id' => $comment->id,
                 'body' => $comment->body,
                 'author' => $comment->user->name,
                 'date' => Carbon::parse($comment->created_at)->toFormattedDateString()
@@ -44,21 +45,22 @@ class CommentController extends Controller
      */
     public function create($id)
     {
-        $topic = Topic::find($id);
 
         $this->validate(request(), [
 
-            'body' => 'max:255'
+            'topic_id' => 'max:255',
+            'user_id' => 'required|max:255',
+            'body' => 'required|max:255',
         ]);
 
-        Comment::create([
+        $result = Comment::create([
 
-            'topic_id' => $topic->id,
-            'user_id' => auth()->user()->id,
+            'topic_id' => request('topic_id'),
+            'user_id' => request('user_id'),
             'body' => request('body'),
         ]);
 
-        return back();  
+        return $this->response->setData(false, $result->toArray())->get();  
     }
 
     /**
@@ -114,7 +116,16 @@ class CommentController extends Controller
      */
     public function destroy($id)
     {
-        Comment::find($id)->delete();
-        return back();
+        $comment = Comment::find($id);
+        if($comment) {
+            $comment->delete();
+            $this->response->setAlerts('Delete is successful.');
+        }
+        else {
+            $this->response->setAlerts('Errors');
+        }
+
+        // $comments = Topic::find($input['topic_id'])->comments;
+        return $this->response->setData(false, ['id' => $id])->get();
     }
 }

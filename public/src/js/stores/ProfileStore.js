@@ -1,12 +1,10 @@
 import AppDispatcher from '../dispatcher';
 import { EventEmitter } from 'events';
-import actions from'../actions';
+import actions from '../actions';
 import StandardStore from './StandardStore';
 import extend from 'lodash/extend';
 import ProfileAPI from '../api/ProfileAPI';
 var Constants = require('../constants');
-
-
 
 var _profileInfo = {};
 var _isLoaded = false;

@@ -10,15 +10,20 @@ var Constants = require('../constants');
 
 var _topicBody = {};
 var _isLoaded = false;
+var _isDeleted = false;
 
 var BodyStore = extend({}, StandardStore, {
 
-	getTopicBody() {
-		return _topicBody;
-	},
+  getTopicBody() {
+    return _topicBody;
+  },
 
   isLoaded(){
     return _isLoaded;
+  },
+
+  isDeleted() {
+    return _isDeleted;
   }
 
   });
@@ -38,9 +43,6 @@ BodyStore.dispatchToken = AppDispatcher.register(function(payload) {
         _isLoaded = true;
         _topicBody = data;
 	    	break;
-
-        default:
-        return true;
       }
 
       BodyStore.emitChange();

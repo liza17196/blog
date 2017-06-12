@@ -12,7 +12,11 @@ class PermissionsTableSeeder extends Seeder
      */
     public function run()
     {
+
+        DB::statement('SET FOREIGN_KEY_CHECKS = 0');
         DB::table('permissions')->truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS = 1');
+        
         Permission::create([
 
         	'name' => "create-section", 
@@ -20,7 +24,6 @@ class PermissionsTableSeeder extends Seeder
         	'description' => "Create new section."
 		]);
 
-		DB::table('permissions')->truncate();
         Permission::create([
 
         	'name' => "delete-post", 
@@ -28,7 +31,6 @@ class PermissionsTableSeeder extends Seeder
         	'description' => "Delete irrelevant posts."
 		]);
 
-		DB::table('permissions')->truncate();
         Permission::create([
 
         	'name' => "delete-comment", 

@@ -12,7 +12,11 @@ class UserTableSeeder extends Seeder
      */
     public function run()
     {
+
+        DB::statement('SET FOREIGN_KEY_CHECKS = 0');
         DB::table('users')->truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS = 1');
+
         User::create([
 
         	'name' => "Admin", 
@@ -22,7 +26,6 @@ class UserTableSeeder extends Seeder
         	'password' => "bcrypt('admin123')"
 		]);
 
-		DB::table('users')->truncate();
         User::create([
 
         	'name' => "User1", 
@@ -32,7 +35,6 @@ class UserTableSeeder extends Seeder
         	'password' => "bcrypt('user123')"
 		]);
 
-				DB::table('users')->truncate();
         User::create([
 
         	'name' => "User2", 
@@ -41,7 +43,7 @@ class UserTableSeeder extends Seeder
         	'avatar'=> "/uploads/avatars/default.jpg", 
         	'password' => "bcrypt('user123')"
 		]);
-				DB::table('users')->truncate();
+
         User::create([
 
         	'name' => "User3", 

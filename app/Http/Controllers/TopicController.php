@@ -30,6 +30,7 @@ class TopicController extends Controller
                 'name' => $topic->title,
                 'last_comment' => $topic->comments->sortByDesc('created_at')->first() ? $topic->comments->sortByDesc('created_at')->first()->body : 'Нет сообщений',
                 'author' => $topic->user->name,
+                'author_id' => $topic->user->id,
                 'created_at' => Carbon::parse($topic->created_at)->toFormattedDateString()            
             ];
             array_push($result,$transform);
@@ -58,10 +59,10 @@ class TopicController extends Controller
 
         $options = Section::all();
 
-        if(Auth::user()) { 
-            return view('pages.create', compact('options'));
-        }
-        return back();
+        // if(Auth::user()) { 
+            return $this->response->setData(false, $options->toArray())->get();
+        // }
+        // return alert('errors');
     }
 
     public function new_topic(Section $options)
@@ -70,6 +71,7 @@ class TopicController extends Controller
 
             'title' => 'required',
             'section_id' => 'max:255',
+            'user_id' => 'max:255',
             'body' => 'required'
         ]);
 
@@ -77,11 +79,14 @@ class TopicController extends Controller
 
             'title' => request('title'),
             'section_id' => request('section_id'),
-            'user_id' => auth()->user()->id,
+            'user_id' => request('user_id'),
             'body' => request('body'),
         ]);
 
-        return redirect('/profile');
+        $alerts = 'The topic was created';
+
+        return $this->response->setAlerts($alerts)
+                        ->get();
     }
 
     public function show($id)                       //вывод страницы определенной темы
@@ -118,9 +123,15 @@ class TopicController extends Controller
 
     public function destroy($id)
     {
-        Topic::find($id)->delete();
-
-        return redirect('/');
+        $topic = Topic::find($id);
+        if($topic) {
+            $topic->delete();
+            $this->response->setAlerts('Delete is successful.');
+        }
+        else {
+            $this->response->setAlerts('Errors');
+        }
+        return $this->response->setData(false, ['id' => $id])->get();
     }
 
 }

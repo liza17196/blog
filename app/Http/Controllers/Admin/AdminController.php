@@ -37,8 +37,9 @@ class AdminController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
+
         $this->validate(request(), [
 
             'filter' => 'required',
@@ -49,7 +50,7 @@ class AdminController extends Controller
             'filter' => request('filter'),
         ]);
 
-        return back();
+        return $this->response->setAlerts('The word was added')->get();
     }
 
     /**

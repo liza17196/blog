@@ -1,52 +1,84 @@
 import React, { Component } from 'react';
+import actions from '../../actions';
 import App from '../App';
 import Body from './Body';
+import Option from './Option';
 
-export default class Create extends Component {
+import UserStore from '../../stores/UserStore';
+import CreateTopicStore from '../../stores/CreateTopicStore';
+
+export default class CreateTopic extends Component {
 
 
   constructor(props) {
-    super(props)
-    this.state = { editorHtml: '' }
-    this.handleChange = this.handleChange.bind(this)
+    super(props);
+    this.state = this.getState();
+    this.getState = this.getState.bind(this);
+    this._HandleChange = this._HandleChange.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
   
-  handleChange (html) {
-  	this.setState({ editorHtml: html });
+  getState() {
+  	return {
+  		title: CreateTopicStore.getTopicTitle(),
+  	}
   }
-	// componentDidMount(){
-	// 	ToDoStore.addChangeListener(this._onChange.bind(this))
-	// }
 
-	// componentWillUnmount(){
-	// 	ToDoStore.removeChangeListener(this._onChange.bind(this))
-	// }
+  _HandleChange () {
+  	this.setState(this.getState());
+  }
 
+  handleChange(event){
+
+		const target = event.target;
+		const value = target.value;
+
+		actions.handle('TOPIC_TITLE', value);
+	}
+
+	handleSubmit() {
+		event.preventDefault();
+		actions.handle('CREATE_TOPIC_ATTEMPT');
+
+	}
+
+	componentDidMount(){
+		CreateTopicStore.addChangeListener(this._HandleChange)
+
+		setTimeout(()=>{actions.handle('USER_ID', UserStore.getUser().id)}, 0);
+	}
+
+	componentWillUnmount(){
+		CreateTopicStore.removeChangeListener(this._HandleChange)
+	}
 
 	render(){
 		return(
              <div className="container">
 		        <h1>Создать новую тему</h1>
-				<form method="POST" action="/posts">
 
 			<br /><br />
 		  <div className="form-group">
 		    <label htmlFor="title">Название темы:</label>
-		    <input type="text" className="form-control col-md-6" id="title" name="title" />
+		    <input type="text" 
+				    className="form-control col-md-6" 
+				    id="title" 
+				    name="title"
+				    value={this.state.title}
+					onChange={this.handleChange} 
+			/>
 		  </div>
 		  
 			<div className="form-group">
-				<label htmlFor="section">Раздел</label>
-				<select className="form-control col-md-2" id="section" name="section_id">
-					
-						<option value="Option's id">Option's title</option>
-					
-				</select>
+				<Option />
 			</div>
 		  <div className="form-group">
 		  <Body />
+		   <br />			  
+			<button
+				className="btn btn-default" 
+				onClick={() => this.handleSubmit()}>Отправить</button>
 		  </div>
-		</form>
 	    </div>
 			)
 	}

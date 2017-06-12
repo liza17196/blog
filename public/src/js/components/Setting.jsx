@@ -1,25 +1,104 @@
 import React, { Component } from 'react';
+import actions from '../actions';
 import App from './App';
+import SettingStore from '../stores/SettingStore';
+import UserStore from '../stores/UserStore';
+
+
 
 export default class Setting extends Component {
 
-	// constructor(props){
-	// 	super(props);
-	// 	this.state = { }
+	constructor(props){
+		super(props);
+		this.state = this.getState();
+		this.getState = this.getState.bind(this);
+		this._onChange = this._onChange.bind(this);
+		this.handleDelete = this.handleDelete.bind(this);
+		this.handleUpdate = this.handleUpdate.bind(this);
+		this.handleChange = this.handleChange.bind(this);
+		this.handleFileChange = this.handleFileChange.bind(this);
+		this.handleFilter = this.handleFilter.bind(this);
+		this.handleSubmit = this.handleSubmit.bind(this);
+	}
 
-	// _onChange() {
-	// 	this.setState(this.state);
-	// }
+	getState() {
+		return{
+			newName: '',
+			filter: '',
+			id: UserStore.getUser().id,
+			newAvatar: null,
+			user_role: UserStore.getRole(),
+		}
+	}
 
-	// componentDidMount(){
-	// 	ToDoStore.addChangeListener(this._onChange.bind(this))
-	// }
+	_onChange() {
+		this.setState(this.getState());
+	}
 
-	// componentWillUnmount(){
-	// 	ToDoStore.removeChangeListener(this._onChange.bind(this))
-	// }
+	handleChange(event) {
+		const target = event.target;
+		const value = target.value;
+		const name = target.name;
+		this.setState({
+			[name]: value 
+		});
+
+	}
+
+	handleFileChange(event){
+		this.setState({
+			[event.target.name]: event.target.files[0] 
+		});
+	}
+
+	handleSubmit() {
+		event.preventDefault();
+
+		let data = {
+			newName: this.state.newName,
+			id: UserStore.getUser().id
+		};
+
+		actions.handle('CHANGE_NICKNAME_ATTEMPT', data);
+	}
+
+	handleUpdate() {
+		event.preventDefault();
+
+		let data = {
+			newAvatar: this.state.newAvatar,
+			id: UserStore.getUser().id
+		};
+
+		var formData = new FormData();
+		formData.append('newAvatar', this.state.newAvatar); 
+		formData.append('id', UserStore.getUser().id);
+
+		actions.handle('UPDATE_AVATAR_ATTEMPT', formData);
+	}
+
+	handleDelete() {
+		actions.handle('DELETE_USER_ATTEMPT', UserStore.getUser().id);
+	}
+
+	handleFilter() {
+		let data = {
+			filter: this.state.filter,
+		};
+		actions.handle('ADD_FILTER_ATTEMPT', data);
+	}
+
+	componentDidMount(){
+		SettingStore.addChangeListener(this._onChange.bind(this));
+		setTimeout(()=>{actions.handle('PROFILE_ID', UserStore.getUser().id)}, 0);
+	}
+
+	componentWillUnmount(){
+		SettingStore.removeChangeListener(this._onChange.bind(this))
+	}
 
 	render(){
+		console.log(this.state.filter, 'filter');
 		return(
 		      <div>
 					<div className="container">
@@ -27,34 +106,71 @@ export default class Setting extends Component {
 					<br /><br />
 						<div className="row">
 						<div className="col-md-3 col-md-offset-1">
-								<form method="POST" action="/profile/{{ Auth::user()->id }}/update">
-									<input type="hidden" name="_token" />
+
 									<label htmlFor="update" style={{fontSize: 20}}>Изменить имя:</label>
-									<input type="text" name="new_nickname" id="update" />
-									<input type="submit" value="Отправить" className="btn btn-sm btn-default" style={{marginTop: 15, padding:'5px 10px', fontSize: 15}} />
-								</form>
+									<input 
+											type="text" 
+										   	name="newName" 
+										   	id="update" 
+										   	value={this.state.newName} 
+										   	onChange={this.handleChange}
+									/><br />
+									<button 
+											className="btn btn-sm btn-default" 
+											style={{marginTop: 15, padding:'5px 10px', fontSize: 15}}
+											onClick={this.handleSubmit}
+									>Send</button>
 								<br />
-								<form encType="multipart/form-data" method="POST" action="/profile/new_avatar">
-									<input type="hidden" name="_token" />
-									<label htmlFor="new-avatar" style={{fontSize: 20}}>Сменить аватарку:</label>
-									<input id="new-avatar" type="file" name="new-avatar" />
-				                    <input type="submit" value="Отправить" className="btn btn-sm btn-default" style={{marginTop: 15, padding:'5px 10px', fontSize: 15}} />
-								</form>
+
+									<label 
+											htmlFor="newAvatar" 
+											style={{fontSize: 20}}
+									>Сменить аватарку:</label>
+									<input 
+											id="newAvatar" 
+											type="file" 
+											name="newAvatar"
+											value={this.state.newAvatar}
+				                    		onChange={this.handleFileChange}
+									/>
+				                    <button 
+				                    		className="btn btn-sm btn-default" 
+				                    		style={{marginTop: 15, padding:'5px 10px', fontSize: 15}}
+				                    		onClick={this.handleUpdate}
+				                    >Change</button>
 								<br />
 
-									<form method="GET" action="/profile/{{ Auth::user()->id }}/delete" className="for owner">
-										<label htmlFor="delete" style={{fontSize: 20}}>Удалить страницу:</label><br />
-										<input type="submit" id="delete" value="delete" className="btn btn-sm btn-default" style={{padding:'5px 10px', fontSize: 15}} />
-									</form>
-									<br />
-
-
-									<form method="POST" action="/profile/{{ Auth::user()->id }}/filter" className="for admin">
-										<input type="hidden" name="_token" />
-										<label htmlFor="filter" style={{fontSize: 20}}>Фильтр слов:</label>
-										<input type="text" name="filter" id="filter" />
-										<input type="submit" value="Отправить" className="btn btn-sm btn-default" style={{marginTop: 15, padding:'5px 10px', fontSize: 15}} />
-									</form>
+									<label 
+											htmlFor="delete" 
+											style={{fontSize: 20}}
+									>Удалить страницу:</label><br />
+									<button 
+											id="delete" 
+											className="btn btn-sm btn-default" 
+											style={{padding:'5px 10px', fontSize: 15}}
+											onClick={this.handleDelete}
+									>Delete</button>	
+								<br />
+									{this.state.user_role != 'user admin' ? <div /> :
+										<div>
+											<label 
+													htmlFor="filter" 
+													style={{fontSize: 20}}
+											>Фильтр слов:</label>
+											<input 
+													type="text" 
+													name="filter" 
+													id="filter"
+													value={this.state.filter} 
+												   	onChange={this.handleChange} 
+											/><br />
+											<button 
+													className="btn btn-sm btn-default" 
+													style={{marginTop: 15, padding:'5px 10px', fontSize: 15}}
+													onClick={this.handleFilter}
+											>Send</button>
+										</div>
+									}
 
 							</div>
 						</div>

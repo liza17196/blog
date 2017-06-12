@@ -29,7 +29,6 @@ export default class Home extends Component {
 	}
 
 	render(){
-		console.log(this.state.sectionList[0]);
 			return(
 				<div className="container">
 					<br />
@@ -59,7 +58,7 @@ export default class Home extends Component {
 								)
 				            })
 				            : 
-							<span />
+							<div />
 			            }
 			            </table>
 			          </div>

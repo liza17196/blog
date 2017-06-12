@@ -3,13 +3,17 @@ import { EventEmitter } from'events';
 import actions from'../actions';
 import StandardStore from './StandardStore';
 import extend from 'lodash/extend';
+import remove from 'lodash/remove';
 import CommentAPI from '../api/CommentAPI';
+import RouterStore from './RouterStore';
 var Constants = require('../constants');
 
 
 
 var _topicComment = [];
 var _isLoaded = false;
+
+var _isDeleted = false;
 
 var CommentStore = extend({}, StandardStore, {
 
@@ -37,6 +41,20 @@ CommentStore.dispatchToken = AppDispatcher.register(function(payload) {
         _isLoaded = true;
       // debugger; 
 	    	break;
+
+        case Constants.DELETE_COMMENT_ATTEMPT:
+        CommentAPI.getDelete(data);
+        break;
+
+        case Constants.DELETE_COMMENT_SUCCESS:
+        _isDeleted = true;
+        remove(_topicComment, function(item){
+          item.id == parseInt(data.id)
+        });
+
+        break;
+
+
 
         default:
         return true;

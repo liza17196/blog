@@ -30,11 +30,11 @@ Route::group(['prefix' => 'blog'], function()
 	Route::post('/profile/new_avatar', 'UserController@update_avatar');		//загрузка новой фотки
 
 	Route::get('/profile/{id}/topics', 'UserController@show');		//вывод тем на стр пользователя
-	Route::get('/profile/{id}/delete', 'UserController@destroy');	//удаление пользователя
-	Route::post('/profile/{id}/update', 'UserController@update');	//изменение имени пользователя
+	Route::delete('/profile/{id}/delete', 'UserController@destroy');	//удаление пользователя
+	Route::post('/profile/{id}/change', 'UserController@update');	//изменение имени пользователя
 
 	Route::get('/create', 'TopicController@create');				//страница создания новой темы
-	Route::get('/create', 'TopicController@option');
+	Route::get('/create/option', 'TopicController@option');
 	Route::post('/posts', 'TopicController@new_topic');				//создание новой темы
 
 	Route::get('/new_section', 'SectionController@create');				//страница создания нового раздела
@@ -47,11 +47,11 @@ Route::group(['prefix' => 'blog'], function()
 
 	Route::post('/posts/{topic}/comments', 'CommentController@create');	//создает новый коммент
 
-	Route::get('/posts/{topic}/delete', 'TopicController@destroy');		//удаление поста
-	Route::get('/posts/{topic}/comments/delete', 'CommentController@destroy');		//удаление коммента
+	Route::delete('/posts/{topic}/delete', 'TopicController@destroy');		//удаление поста
+	Route::delete('/comments/{id}', 'CommentController@destroy');		//удаление коммента
 
 	Route::get('/user_list', 'Admin\AdminController@index');		//список пользователей
-	Route::post('/profile/{id}/filter', 'Admin\AdminController@create');	//фильтр слов
+	Route::post('/filter', 'Admin\AdminController@create');	//фильтр слов
 
 
 });

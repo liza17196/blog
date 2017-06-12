@@ -27,7 +27,17 @@ class UserController extends Controller
 
     public function index()
     {
-        $user = Auth::user() ? Auth::user()->toArray() : [];
+        $user = Auth::user();
+        if ($user)
+        {
+            $role = $user->roles[0]->name;
+            $user = $user->toArray();
+            $user['role'] = $role;
+        }
+        else
+        {
+            $user = ['role' => 'guest'];
+        }
         return $this->response->setData(false, $user)->get();
     }
 
@@ -96,26 +106,32 @@ class UserController extends Controller
      */
     public function update_avatar(Request $request)
     {
-        if($request->hasFile('new-avatar')) {
-            $avatar = $request->file('new-avatar');
+        if($request->hasFile('newAvatar')) {
+            $avatar = $request->file('newAvatar');
             $filename = time() . '.' . $avatar->getClientOriginalExtension();
             Image::make($avatar)->resize(150, 150)->save(public_path('/uploads/avatars/' . $filename));
 
             $user = Auth::user();
             $user->avatar ='/uploads/avatars/' . $filename;
             $user->save();
+
+             return $this->response->setAlerts('Update is successful')->get();
         }
 
-        return back();
+        return $this->response->setErrors('The newAvatar is null')->setAlerts('Something was wrong')->get();
     }
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $new_nickname = request('new_nickname');
-        $user = User::find($id);
-        $user->name = $new_nickname;
-        $user->save();
+        if(request('newName')) {
+            $newName = request('newName');
+            $user = User::find(request('id'));
+            $user->name = $newName;
+            $user->save();
 
-        return redirect('/profile');
+            return $this->response->setAlerts('Update is successful')->get();
+        }
+
+        return $this->response->setErrors('The newName is null')->setAlerts('Something was wrong')->get();
 
     }
 
@@ -127,10 +143,10 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        dd('hey');
+
         Auth::logout();
         User::find($id)->delete();
 
-        return redirect('/');
+        $this->response->setAlerts('Delete is successful. Bye-bye')->redirect('/');
     }
 }

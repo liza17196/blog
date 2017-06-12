@@ -27,7 +27,7 @@ export default class TopicBody extends Component {
 	componentDidMount(){
 		BodyStore.addChangeListener(this._HandleChange)
 
-		actions.handle('TOPIC_BODY_ATTEMPT', this.props.params.topic_id);
+		setTimeout(()=>{actions.handle('TOPIC_BODY_ATTEMPT', this.props.params.topic_id)}, 0);
 	}
 
 	componentWillUnmount(){
@@ -43,11 +43,7 @@ export default class TopicBody extends Component {
 					<h2>{this.state.topicBody.title}</h2><p style={{fontSize: 14, color: '#808080'}}>{this.state.topicBody.created_at} &nbsp; Автор: &nbsp; {this.state.topicBody.author}</p>
 					<br /><br />
 					<div dangerouslySetInnerHTML={{__html:this.state.topicBody.body}} />
-
-					<form method="GET" action="#/delete">
-						<input type="submit" value="Удалить тему" className="btn btn-danger" />
-					</form>
-					
+										
 					<hr />
 					<div className='comments'>
 					<CommentBody topic_id={this.props.params.topic_id}/>

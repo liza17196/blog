@@ -34,7 +34,6 @@ ProfileTableStore.dispatchToken = AppDispatcher.register(function(payload) {
           break;
 
       case Constants.PROFILE_TABLE_SUCCESS: 
-      // debugger;
         _profileTable = data;
         _isLoaded = true;
 	    	break;

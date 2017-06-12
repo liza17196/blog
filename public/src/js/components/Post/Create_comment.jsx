@@ -1,28 +1,63 @@
 import React, { Component } from 'react';
 import ReactQuill from 'react-quill';
+import actions from '../../actions';
+import App from '../App';
 
-export default class Comment extends Component {
+import UserStore from '../../stores/UserStore';
+import CreateCommentStore from '../../stores/CreateCommentStore';
+
+export default class Create_comment extends Component {
 
 
   constructor(props) {
     super(props)
-    this.state = { editorHtml: '' }
+    this.state = this.getState()
+    this.getState = this.getState.bind(this)
     this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
+    this._HandleChange = this._HandleChange.bind(this)
   }
-  
-  handleChange (html) {
-  	this.setState({ editorHtml: text });
-  }
-	// componentDidMount(){
-	// 	ToDoStore.addChangeListener(this._onChange.bind(this))
-	// }
 
-	// componentWillUnmount(){
-	// 	ToDoStore.removeChangeListener(this._onChange.bind(this))
-	// }
+  getState() {
+  	return{
+  		body: '',
+  		user_id: UserStore.getUser().id,
+  		topic_id: this.props.topic_id,
+  	}
+  }
+
+  _HandleChange () {
+  	this.setState(this.getState());
+  }
+
+  handleChange(value) {
+  	this.setState({body: value});
+  }
+
+  handleSubmit(event) {	    
+  	event.preventDefault();
+  	let data = {
+  		body: this.state.body,
+  		user_id: this.state.user_id,
+  		topic_id: this.state.topic_id,
+  	};
+
+  	actions.handle('CREATE_COMMENT_ATTEMPT', data);
+  }
+
+	componentDidMount(){
+		CreateCommentStore.addChangeListener(this._HandleChange.bind(this))
+	}
+
+	componentWillUnmount(){
+		CreateCommentStore.removeChangeListener(this._HandleChange.bind(this))
+	}
 
 
 	render(){
+		console.log(this.state.body, 'body');
+		console.log(UserStore.getUser().id, 'iser id');
+		console.log(this.props.topic_id, 'props');
 		return(
 			<div className="card-block">
 								
@@ -43,12 +78,12 @@ export default class Comment extends Component {
 					   		theme="snow"
 					   		modules={Comment.modules}
 	                    	formats={Comment.formats} 
-					   		value={this.state.text}
+					   		value={this.state.body}
 	                  		onChange={this.handleChange} 
 	                  		placeholder="Оставить комментарий"
 	                  		/>
 					  </div> 
-					  <input type="submit" className="btn btn-default" value="Опубликовать" />
+					  <button onClick={this.handleSubmit} className="btn btn-default" value="Опубликовать">Publish</button>
 				</form>
 			</div>
 

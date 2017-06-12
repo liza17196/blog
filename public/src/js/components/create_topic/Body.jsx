@@ -1,25 +1,43 @@
 import React, { Component } from 'react';
 import ReactQuill from 'react-quill';
+import actions from '../../actions';
+
+import CreateTopicStore from '../../stores/CreateTopicStore';
 
 export default class Body extends Component {
 
 
   constructor(props) {
     super(props)
-    this.state = { editorHtml: '' }
+    this.state = this.getState();
+    this.getState = this.getState.bind(this);
+    this._HandleChange = this._HandleChange.bind(this)
     this.handleChange = this.handleChange.bind(this)
   }
-  
-  handleChange (html) {
-  	this.setState({ editorHtml: text });
-  }
-	// componentDidMount(){
-	// 	ToDoStore.addChangeListener(this._onChange.bind(this))
-	// }
 
-	// componentWillUnmount(){
-	// 	ToDoStore.removeChangeListener(this._onChange.bind(this))
-	// }
+  getState() {
+  	return{
+  		text: CreateTopicStore.getTopicBody(),
+
+  	}
+  }
+  
+  _HandleChange () {
+  	this.setState(this.getState());
+  }
+
+  handleChange(value) {
+
+    actions.handle('TOPIC_BODY', value);
+  }
+
+	componentDidMount(){
+		CreateTopicStore.addChangeListener(this._HandleChange)
+	}
+
+	componentWillUnmount(){
+		CreateTopicStore.removeChangeListener(this._HandleChange)
+	}
 
 
 	render(){
@@ -34,8 +52,7 @@ export default class Body extends Component {
                     	formats={Body.formats} 
 				   		value={this.state.text}
                   		onChange={this.handleChange} />
-				  </div>			  
-				  <input type="submit" className="btn btn-default" value="Отправить" />
+    			   </div>             
 			    </div>
 			)
 	}

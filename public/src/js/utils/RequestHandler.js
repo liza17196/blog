@@ -1,5 +1,6 @@
 var rh = require('./ResponseHandler');
 var $ = require('jquery');
+import extend from 'lodash/extend';
 
 // var _token = window.cd.access_token;
 var _api_url = 'http://localhost:8000';
@@ -21,7 +22,7 @@ module.exports = {
 
     options.dataType = 'json';
     options.url = _api_url+options.url;
-
+    
     if(options.processData === false)
     {
       // options.data.append('access_token', _token);
@@ -30,6 +31,7 @@ module.exports = {
       // options.data.access_token = _token;
           options.data._token = window.data.csrf;
     }
+
       $.ajax(options)
         .done(function(res)
         {

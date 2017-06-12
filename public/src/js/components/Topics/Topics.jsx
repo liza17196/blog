@@ -9,6 +9,7 @@ import Home from '../Home';
 
 import Link from 'react-router/lib/Link';
 import TopicBody from '../Post/TopicBody';
+import UserStore from '../../stores/UserStore';
 
 
 export default class Topics extends Component {
@@ -18,6 +19,8 @@ export default class Topics extends Component {
 		this.state = this.getState();
 		this.getState = this.getState.bind(this);
 		this._HandleChange = this._HandleChange.bind(this);
+		this.handleDelete = this.handleDelete.bind(this);
+
 	}
 
 	_HandleChange() {
@@ -28,7 +31,13 @@ export default class Topics extends Component {
 		return{
 			topicList: TopicStore.getTopicList(),
 			isLoaded: TopicStore.isLoaded(),
+			user_role: UserStore.getRole(),
 			};
+	}
+
+
+	handleDelete(index) {
+		actions.handle('DELETE_TOPIC_ATTEMPT', index);
 	}
 
 	componentDidMount(){
@@ -55,6 +64,7 @@ export default class Topics extends Component {
 		                  <th>Последнее сообщение</th>
 		                  <th>Автор</th>
 		                  <th>Дата</th>
+		                  <th></th>
 		                </tr>
 		            </thead>
 		            {
@@ -66,6 +76,11 @@ export default class Topics extends Component {
 				                  <td><div dangerouslySetInnerHTML={{__html:item.last_comment}} /></td>
 				                  <td>{item.author}</td>
 				                  <td>{item.created_at}</td>
+				                  <td>
+				                  		{this.state.user_role != 'user admin' ? <div /> :
+											<button onClick={()=>this.handleDelete(item.id)} className="btn btn-danger">Delete topic</button>
+										}
+									</td>
 				                </tr>
 				              </tbody>
 		          			)

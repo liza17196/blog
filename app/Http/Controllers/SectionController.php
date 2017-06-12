@@ -31,9 +31,9 @@ class SectionController extends Controller
             $result[] = [
                 'id' => $section->id,
                 'name' => $section->section,
-                'last_topic_id' => $section->topics->sortByDesc('created_at')->first()->id, 
-                'last_topic' => $section->topics->sortByDesc('created_at')->first()->title,
-                'last_topic_author' => $section->topics->sortByDesc('created_at')->first()->user->name,
+                'last_topic_id' => $section->topics->sortByDesc('created_at')->first() ? $section->topics->sortByDesc('created_at')->first()->id : 'Нет тем', 
+                'last_topic' => $section->topics->sortByDesc('created_at')->first() ? $section->topics->sortByDesc('created_at')->first()->title : 'Нет тем',
+                'last_topic_author' => $section->topics->sortByDesc('created_at')->first() ? $section->topics->sortByDesc('created_at')->first()->user->name : 'Нет тем',
                 'created_at' => Carbon::parse($section->created_at)->toFormattedDateString()
             ];
         }
@@ -69,7 +69,10 @@ class SectionController extends Controller
             'section' => request('section'),
         ]);
 
-        return redirect('/');
+        $alerts = 'The section was created';
+
+        return $this->response->setAlerts($alerts)
+                        ->get();
     }
 
     /**

@@ -4,12 +4,13 @@ import actions from'../actions';
 import StandardStore from './StandardStore';
 import UserAPI from '../api/UserAPI';
 import extend from 'lodash/extend';
+import RouterStore from './RouterStore';
 var Constants = require('../constants');
 
 
 
 var _user = [];
-var _authenticated = false;
+var _isLoaded = false;
 
 var UserStore = extend({}, StandardStore, {
 
@@ -17,11 +18,15 @@ var UserStore = extend({}, StandardStore, {
 		return _user;
 	},
 
-  isAuthenticated() {
-    return _authenticated;
-  }
+  getRole() {
+    return _user.role;
+  },
 
-  });
+  isLoaded() {
+    return _isLoaded;
+  },
+
+});
 UserStore.dispatchToken = AppDispatcher.register(function(payload) {
       var action = payload.action;
       var data = action.data;
@@ -29,53 +34,45 @@ UserStore.dispatchToken = AppDispatcher.register(function(payload) {
       switch(action.actionType) {
 
         case Constants.REGISTER_ATTEMPT:
-          _authenticated = false;
-        // debugger;
+          _isLoaded = false;
           UserAPI.getRegister(data);
           break;
 
       case Constants.REGISTER_SUCCESS: 
         _user = data;
-        _authenticated = true;
-        //RouterStore.get().push('/')
-        // debugger;
+        _isLoaded = true;
+        RouterStore.get().push('/');
 	    	break;
 
         case Constants.LOGIN_ATTEMPT:
-          _authenticated = false;
-        // debugger;
+          _isLoaded = false;
           UserAPI.getLogin(data);
           break;
 
       case Constants.LOGIN_SUCCESS: 
         _user = data;
-        _authenticated = true;
-        //RouterStore.get().push('/')
-        // debugger;
+        _isLoaded = true;
+        RouterStore.get().push('/');
         break;
 
       case Constants.LOGOUT_ATTEMPT: 
-        _authenticated = true;
-        // debugger;
+        _isLoaded = true;
           UserAPI.getLogout(data);
           break;
       
       case Constants.LOGOUT_SUCCESS: 
         _user = [];
-        _authenticated = false;
-        //RouterStore.get().push('/')
-        // debugger;
+        _isLoaded = true;
+        RouterStore.get().push('/');
         break;
 
       case Constants.CHECK_ATTEMPT: 
-        // debugger;
           UserAPI.getCheck();
           break;
       
-      case Constants.CHECK_SUCCESS: 
+      case Constants.CHECK_SUCCESS:
+        _isLoaded = true;
         _user = data;
-        //RouterStore.get().push('/')
-        // debugger;
         break;
 
 
