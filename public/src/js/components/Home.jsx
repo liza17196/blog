@@ -10,22 +10,27 @@ export default class Home extends Component {
 
 	constructor(props){
 		super(props);
-		this.state = {
-			sectionList: SectionStore.getSectionList()
-		};
+		this.state = this.getState();
+		this.getState = this.getState.bind(this);
+		this._HandleChange = this._HandleChange.bind(this);
 	}
 
 	_HandleChange() {
-		this.setState(this.state);
+		this.setState(this.getState());
+	}
+	getState() {
+		return {
+			sectionList: SectionStore.getSectionList(),
+		}
 	}
 
 	componentDidMount(){
-		SectionStore.addChangeListener(this._HandleChange.bind(this))
+		SectionStore.addChangeListener(this._HandleChange)
 		setTimeout(()=>{actions.handle('TAKE_SECTIONS_ATTEMPT')}, 0);
 	}
 
 	componentWillUnmount(){
-		SectionStore.removeChangeListener(this._HandleChange.bind(this))
+		SectionStore.removeChangeListener(this._HandleChange)
 	}
 
 	render(){
@@ -57,8 +62,7 @@ export default class Home extends Component {
 					              </tbody>
 								)
 				            })
-				            : 
-							<div />
+				            : <div />
 			            }
 			            </table>
 			          </div>

@@ -12,6 +12,7 @@ var Constants = require('../constants');
 
 var _topicComment = [];
 var _isLoaded = false;
+var _topicId = '';
 
 var _isDeleted = false;
 
@@ -32,6 +33,10 @@ CommentStore.dispatchToken = AppDispatcher.register(function(payload) {
 
       switch(action.actionType) {
 
+        case Constants.TOPIC_ID:
+          _topicId = data;
+          break;
+
         case Constants.TOPIC_COMMENT_ATTEMPT:
           CommentAPI.get(data);
           break;
@@ -39,7 +44,6 @@ CommentStore.dispatchToken = AppDispatcher.register(function(payload) {
       case Constants.TOPIC_COMMENT_SUCCESS:
         _topicComment = data
         _isLoaded = true;
-      // debugger; 
 	    	break;
 
         case Constants.DELETE_COMMENT_ATTEMPT:
@@ -51,10 +55,9 @@ CommentStore.dispatchToken = AppDispatcher.register(function(payload) {
         remove(_topicComment, function(item){
           item.id == parseInt(data.id)
         });
+        RouterStore.get().push('/posts/' + _topicId);
 
         break;
-
-
 
         default:
         return true;

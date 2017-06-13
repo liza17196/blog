@@ -61,7 +61,7 @@ UserStore.dispatchToken = AppDispatcher.register(function(payload) {
           break;
       
       case Constants.LOGOUT_SUCCESS: 
-        _user = [];
+        _user = data;
         _isLoaded = true;
         RouterStore.get().push('/');
         break;

@@ -72,9 +72,9 @@ SettingStore.dispatchToken = AppDispatcher.register(function(payload) {
           break;
 
       case Constants.DELETE_USER_SUCCESS: 
+        RouterStore.get().push('/');
         _isDeleted = true;
         break;
-        RouterStore.get().push('/');
 
       case Constants.ADD_FILTER_ATTEMPT:
         SettingAPI.postFilter(data);

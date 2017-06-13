@@ -28,7 +28,7 @@ export default class SectionsName extends Component {
 	componentDidMount(){
 		SectionNameStore.addChangeListener(this._HandleChange.bind(this))
 		// debugger;
-		actions.handle('SECTION_NAME_ATTEMPT', this.props.section_id);
+		setTimeout(()=>{actions.handle('SECTION_NAME_ATTEMPT', this.props.section_id)}, 0);
 	}
 
 	componentWillUnmount(){

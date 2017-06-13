@@ -36,12 +36,14 @@ BodyStore.dispatchToken = AppDispatcher.register(function(payload) {
         case Constants.TOPIC_BODY_ATTEMPT:
           _isLoaded = false;
           BodyAPI.get(data);
+          // debugger;
           break;
 
       case Constants.TOPIC_BODY_SUCCESS: 
       // debugger;
         _isLoaded = true;
         _topicBody = data;
+        console.log(_topicBody);
 	    	break;
       }
 

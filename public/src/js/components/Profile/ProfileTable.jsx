@@ -50,7 +50,7 @@ export default class ProfileTable extends Component {
 		                </tr>
 		              </thead>
 		              {
-		              	this.state.isLoaded ? this.state.profileTable.map((item, index) => {
+		              	this.state.profileTable > 0 ? this.state.profileTable.map((item, index) => {
 		              		return(
 				              <tbody key={index}>
 				                <tr>

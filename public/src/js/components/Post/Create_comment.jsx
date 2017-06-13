@@ -22,6 +22,7 @@ export default class Create_comment extends Component {
   	return{
   		body: '',
   		user_id: UserStore.getUser().id,
+  		user_role: UserStore.getRole(),
   		topic_id: this.props.topic_id,
   	}
   }
@@ -55,36 +56,27 @@ export default class Create_comment extends Component {
 
 
 	render(){
-		console.log(this.state.body, 'body');
-		console.log(UserStore.getUser().id, 'iser id');
-		console.log(this.props.topic_id, 'props');
 		return(
 			<div className="card-block">
-								
-				<form method="POST" action="/posts/{{ $topic->id }}/comments">
-					
-					<div className="form-group">
-						<input placeholder="Вам необходимо зарегестрироваться что бы оставить комментарии" style={{ width: '100%', height: 50, }}
-	                  		disabled
-	                  		/>
-					</div>
-				</form>
-			
-				<form method="POST" action="/posts/{{ $topic->id }}/comments">
-					
-					<div className="form-group">
-					   <ReactQuill
-					   		
-					   		theme="snow"
-					   		modules={Comment.modules}
-	                    	formats={Comment.formats} 
-					   		value={this.state.body}
-	                  		onChange={this.handleChange} 
-	                  		placeholder="Оставить комментарий"
-	                  		/>
-					  </div> 
-					  <button onClick={this.handleSubmit} className="btn btn-default" value="Опубликовать">Publish</button>
-				</form>
+			{this.state.user_role == 'guest' ? 							
+				<div className="form-group">
+					<input placeholder="Вам необходимо зарегестрироваться что бы оставить комментарии" style={{ width: '100%', height: 50, }}
+                  		disabled
+                  		/>
+				</div>	:				
+				<div className="form-group">
+				   <ReactQuill
+				   		
+				   		theme="snow"
+				   		modules={Comment.modules}
+                    	formats={Comment.formats} 
+				   		value={this.state.body}
+                  		onChange={this.handleChange} 
+                  		placeholder="Оставить комментарий"
+                  		/><br />
+				  <button onClick={this.handleSubmit} className="btn btn-default" value="Опубликовать">Publish</button>
+				  </div> 
+			}
 			</div>
 
 		 

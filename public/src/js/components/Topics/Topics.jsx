@@ -86,7 +86,7 @@ export default class Topics extends Component {
 		          			)
 		          		})
 		          		:
-		          		<span/>
+		          		<div />
 		            }
 
 		            </table>

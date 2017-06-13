@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import actions from '../../actions';
 import App from '../App';
 import BodyStore from '../../stores/BodyStore';
-import CommentBody from './TopicComment';
+import TopicComment from './TopicComment';
 
 export default class TopicBody extends Component {
 
@@ -35,6 +35,7 @@ export default class TopicBody extends Component {
 	}
 
 	render(){
+		console.log(this.props.params.topic_id, 'props_params');
 		if (!this.state.isLoaded)
 			return <div />
 		return(
@@ -46,7 +47,7 @@ export default class TopicBody extends Component {
 										
 					<hr />
 					<div className='comments'>
-					<CommentBody topic_id={this.props.params.topic_id}/>
+					<TopicComment topic_id={this.props.params.topic_id}/>
 					</div>	
 		    	</div>
 			)

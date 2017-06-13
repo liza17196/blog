@@ -147,6 +147,8 @@ class UserController extends Controller
         Auth::logout();
         User::find($id)->delete();
 
-        $this->response->setAlerts('Delete is successful. Bye-bye')->redirect('/');
+        $user = $user = ['role' => 'guest'];
+
+        $this->response->setData(false, $user)->get();
     }
 }

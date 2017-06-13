@@ -4,6 +4,7 @@ import actions from'../actions';
 import StandardStore from './StandardStore';
 import extend from 'lodash/extend';
 import CreateTopicAPI from '../api/CreateTopicAPI';
+import RouterStore from './RouterStore';
 var Constants = require('../constants');
 
 
@@ -92,7 +93,7 @@ CreateTopicStore.dispatchToken = AppDispatcher.register(function(payload) {
 
         case Constants.CREATE_TOPIC_SUCCESS:
         _topic = data;
-        RouterStore.get().push('/');
+        RouterStore.get().push('/sections/' + _createOption);
         break;
 
         default:

@@ -4,6 +4,7 @@ import actions from'../actions';
 import StandardStore from './StandardStore';
 import extend from 'lodash/extend';
 import CreateCommentAPI from '../api/CreateCommentAPI';
+import RouterStore from './RouterStore';
 var Constants = require('../constants');
 
 
@@ -29,12 +30,12 @@ CreateCommentStore.dispatchToken = AppDispatcher.register(function(payload) {
       switch(action.actionType) {
 
         case Constants.CREATE_COMMENT_ATTEMPT:
-      // debugger; 
           CreateCommentAPI.postComment(data);
           break;
 
       case Constants.CREATE_COMMENT_SUCCESS:
-        _newComment = data
+        _newComment = data;
+        RouterStore.get().push('/posts/' + data.topic_id);
 	    	break;
 
         default:

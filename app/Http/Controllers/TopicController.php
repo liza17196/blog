@@ -75,7 +75,7 @@ class TopicController extends Controller
             'body' => 'required'
         ]);
 
-        Topic::create([
+        $topic = Topic::create([
 
             'title' => request('title'),
             'section_id' => request('section_id'),
@@ -99,6 +99,7 @@ class TopicController extends Controller
                 'title' => $topics->title,
                 'body' => $topics->body,
                 'author' => $topics->user->name,
+                'author_id' => $topics->user->id,
                 'created_at' => Carbon::parse($topics->created_at)->toFormattedDateString()
             ];
         };
