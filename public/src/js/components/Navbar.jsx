@@ -4,7 +4,7 @@ import Link from 'react-router/lib/Link';
 import Home from './Home';
 import New_Section from './New_Section';
 import Admin from './Admin';
-import Setting from './Setting';
+import Settings from './Settings';
 import Create from './create_topic/Create';
 import Topics from './Topics/Topics';
 import TopicBody from './Post/TopicBody';
@@ -74,8 +74,8 @@ export default class Navbar extends Component {
 						text: 'Profile'
 					},
 					{
-						link: '/setting',
-						text: 'Setting'
+						link: '/settings',
+						text: 'Settings'
 					},
 					{
 						onClick: this.handleClick,
@@ -107,8 +107,8 @@ export default class Navbar extends Component {
 						text: 'Profile'
 					},
 					{
-						link: '/setting',
-						text: 'Setting'
+						link: '/settings',
+						text: 'Settings'
 					},
 					{
 						onClick: this.handleClick,

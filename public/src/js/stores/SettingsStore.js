@@ -3,7 +3,7 @@ import { EventEmitter } from 'events';
 import actions from '../actions';
 import StandardStore from './StandardStore';
 import extend from 'lodash/extend';
-import SettingAPI from '../api/SettingAPI';
+import SettingsAPI from '../api/SettingsAPI';
 import RouterStore from './RouterStore';
 var Constants = require('../constants');
 
@@ -50,7 +50,7 @@ SettingStore.dispatchToken = AppDispatcher.register(function(payload) {
         break;
 
       case Constants.CHANGE_NICKNAME_ATTEMPT:
-        SettingAPI.postChange(data);
+        SettingsAPI.postChange(data);
         break;
 
       case Constants.CHANGE_NICKNAME_SUCCESS: 
@@ -59,7 +59,7 @@ SettingStore.dispatchToken = AppDispatcher.register(function(payload) {
 	    	break;
 
       case Constants.UPDATE_AVATAR_ATTEMPT:
-        SettingAPI.postUpdate(data);
+        SettingsAPI.postUpdate(data);
         break;
 
       case Constants.UPDATE_AVATAR_SUCCESS: 
@@ -68,7 +68,7 @@ SettingStore.dispatchToken = AppDispatcher.register(function(payload) {
         break;
 
       case Constants.DELETE_USER_ATTEMPT:
-          SettingAPI.getDelete(data);
+          SettingsAPI.getDelete(data);
           break;
 
       case Constants.DELETE_USER_SUCCESS: 
@@ -77,7 +77,7 @@ SettingStore.dispatchToken = AppDispatcher.register(function(payload) {
         break;
 
       case Constants.ADD_FILTER_ATTEMPT:
-        SettingAPI.postFilter(data);
+        SettingsAPI.postFilter(data);
         break;
 
       case Constants.ADD_FILTER_SUCCESS: 

@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import actions from '../actions';
 import App from './App';
-import SettingStore from '../stores/SettingStore';
+import SettingsStore from '../stores/SettingsStore';
 import UserStore from '../stores/UserStore';
 
 
 
-export default class Setting extends Component {
+export default class Settings extends Component {
 
 	constructor(props){
 		super(props);
@@ -89,12 +89,12 @@ export default class Setting extends Component {
 	}
 
 	componentDidMount(){
-		SettingStore.addChangeListener(this._onChange.bind(this));
+		SettingsStore.addChangeListener(this._onChange.bind(this));
 		setTimeout(()=>{actions.handle('PROFILE_ID', UserStore.getUser().id)}, 0);
 	}
 
 	componentWillUnmount(){
-		SettingStore.removeChangeListener(this._onChange.bind(this))
+		SettingsStore.removeChangeListener(this._onChange.bind(this))
 	}
 
 	render(){
